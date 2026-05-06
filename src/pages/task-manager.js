@@ -23,61 +23,76 @@ const MEASURE_GAP = 6; // espacio extra por tag al medir
 
 /* ====== FUNCIONES / MÉTODOS ======
    Funciones auxiliares, handlers y callbacks */
-function TagList({ tags }) {
-  // Referencias DOM para medir texto y contener tags visibles
+function TagList({ tags, boardView = false }) {
   const containerRef = useRef(null);
   const measurerRef = useRef(null);
 
-  // Estados locales
   const [visibleCount, setVisibleCount] = useState(tags.length);
   const [expanded, setExpanded] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(null);
 
-  // Trunca un tag a máximo `max` caracteres
   const truncate = useCallback(
     (t, max = 10) => (t.length > max ? t.slice(0, max) + "..." : t),
     [],
   );
 
-  // Array de tags truncados para render
   const truncated = useMemo(
     () => tags.map((t) => truncate(t)),
     [tags, truncate],
   );
 
-  // Mide y calcula cuántos tags caben en el contenedor visible
   const measure = useCallback(() => {
     if (expanded) {
       setVisibleCount(tags.length);
       return;
     }
+
     const cont = containerRef.current;
     const m = measurerRef.current;
     if (!cont || !m) return;
 
-    const plusText = `+${tags.length}`;
-    const gap = MEASURE_GAP;
+    // Asegurarnos de que el measurer use el mismo box-sizing / fuente / padding
+    m.style.boxSizing = "border-box";
+    m.style.whiteSpace = "nowrap";
+
+    // ancho disponible real (sin scrollbars)
+    const contW = cont.clientWidth;
+
+    // gap real entre elementos (flex gap)
+    const cs = getComputedStyle(cont);
+    const gap =
+      parseFloat(cs.columnGap || cs.gap || MEASURE_GAP) || MEASURE_GAP;
+
     let used = 0;
     let lastVisible = -1;
-    const contW = cont.offsetWidth;
-
-    m.textContent = plusText;
-    const plusW = m.offsetWidth + gap;
 
     for (let i = 0; i < truncated.length; i++) {
+      // medir el tag i
       m.textContent = truncated[i];
       const w = m.offsetWidth + gap;
+
+      // calcular cuánto ocuparía el "+N" si hubiese elementos restantes
+      const remaining = tags.length - (i + 1);
+      let plusW = 0;
+      if (remaining > 0) {
+        m.textContent = `+${remaining}`;
+        plusW = m.offsetWidth + gap;
+        // restauramos el texto para seguir midiendo si hace falta
+        m.textContent = truncated[i];
+      }
+
+      // comprobar si caben (tag actual + posible botón +N)
       if (used + w + plusW <= contW) {
         used += w;
         lastVisible = i;
-      } else break;
+      } else {
+        break;
+      }
     }
 
-    // Si no cabe nada, al menos mostrar 0 (el botón +X aparecerá)
     setVisibleCount(lastVisible + 1);
-  }, [tags.length, truncated, expanded]);
+  }, [tags, truncated, expanded]);
 
-  // Observador de resize y efecto inicial
   useLayoutEffect(() => {
     measure();
     const ro = new ResizeObserver(measure);
@@ -91,18 +106,19 @@ function TagList({ tags }) {
 
   return (
     <>
-      {/* Elemento invisible para mediciones de texto */}
+      {/* Measurer: le damos la misma clase que el tag para medir exactamente */}
       <div
         ref={measurerRef}
+        className="g__btn g__btn--hover g__text--xs tm__tag-item fw-semibold"
         style={{
           position: "fixed",
           top: -9999,
           left: -9999,
+          visibility: "hidden",
           whiteSpace: "nowrap",
         }}
       />
 
-      {/* Contenedor de tags visibles */}
       <div ref={containerRef} className="d-flex gap-2 flex-wrap mt-2">
         {tags.slice(0, visibleCount).map((tag, i) => (
           <div
@@ -111,12 +127,10 @@ function TagList({ tags }) {
             onMouseEnter={() => setHoverIndex(i)}
             onMouseLeave={() => setHoverIndex(null)}
           >
-            {/* Tag truncado */}
             <div className="g__btn g__btn--hover g__text--xs tm__tag-item fw-semibold">
               {truncated[i].charAt(0).toUpperCase() + truncated[i].slice(1)}
             </div>
 
-            {/* Tooltip con tag completo si está truncado */}
             {hoverIndex === i && (
               <div className="g__btn g__btn--hover g__text--xs tm__tag-tooltip">
                 {tag}
@@ -125,8 +139,10 @@ function TagList({ tags }) {
           </div>
         ))}
 
-        {/* Botón "+X" para expandir si hay tags ocultos */}
-        {!expanded && visibleCount < tags.length && (
+        {boardView && visibleCount < tags.length && (
+          <div className="g__btn g__text--xs tm__tag-item fw-semibold">...</div>
+        )}
+        {!boardView && !expanded && visibleCount < tags.length && (
           <div
             className="g__btn g__btn--hover g__text--xs tm__tag-item fw-semibold"
             onClick={() => setExpanded(true)}
@@ -135,7 +151,6 @@ function TagList({ tags }) {
           </div>
         )}
 
-        {/* Botón "▲" para contraer cuando está expandido */}
         {expanded && (
           <div
             className="g__btn g__btn--hover g__text--xs tm__tag-item fw-semibold"
@@ -265,7 +280,7 @@ export default function Tareas() {
   /* ====== RENDER / JSX ======
      Estructura principal del componente, return con JSX */
   return (
-    <main className="g__page-bg g__page-fill">
+    <main>
       <div className="container">
         {/* ENCABEZADO / CAMBIO DE VISTA */}
         <div className="g__card tm__button-list d-inline-flex justify-content-between align-items-center p-3 rounded">
@@ -438,7 +453,7 @@ export default function Tareas() {
                   </div>
 
                   <div className="g__text--md fw-semibold">{task.title}</div>
-                  <div className="g__text--sm tm__timeline-sub">
+                  <div className="g__text--sm g__text-color--grey ">
                     Creado: {task.created} · Modificado: {task.updated}
                   </div>
                   <TagList tags={task.tags} />
@@ -472,13 +487,13 @@ export default function Tareas() {
                 <div key={task.id} className="col-md-4">
                   <div className="g__card rounded p-3 d-flex flex-column h-100">
                     <div className="g__text--md fw-semibold">{task.title}</div>
-                    <div className="g__text--sm tm__timeline-sub">
+                    <div className="g__text--sm g__text-color--grey ">
                       Creado: {task.created} · Modificado: {task.updated}
                     </div>
-                    <div className="g__text--sm tm__timeline-sub mt-2 tm__two-lines">
+                    <div className="g__text--sm g__text-color--grey  mt-2 tm__two-lines">
                       {task.text}
                     </div>
-                    <TagList tags={task.tags} />
+                    <TagList tags={task.tags} boardView={true} />
                   </div>
                 </div>
               ))

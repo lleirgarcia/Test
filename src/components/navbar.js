@@ -27,9 +27,9 @@ export default function NavBar({ location }) {
   const title = titles[location.pathname] || "Página sin identificar";
 
   return (
-    <nav className="g__page-bg" aria-label="Barra de navegación superior">
+    <nav aria-label="Barra de navegación superior">
       <div className="container">
-        <div className="g__card p-3 rounded d-flex align-items-center justify-content-between">
+        <div className="g__card p-3 rounded-bottom d-flex align-items-center justify-content-between">
           {/* Enlace de navegación principal hacia la raíz */}
           <Link
             to="/"

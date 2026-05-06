@@ -29,6 +29,7 @@ import PageNotFound from "./pages/page-not-found.js";
 import NavBar from "./components/navbar.js";
 import Auth from "./pages/auth.js";
 import CommunityScore from "./pages/community-score.js";
+import Externo from "./pages/externo.js";
 
 /* ====== CONSTANTES / DATOS ======
    Datos estáticos, arrays de opciones, configuraciones internas */
@@ -73,6 +74,7 @@ function AnimatedRoutes() {
         <Route path="/gestor-de-tareas" element={<TaskManager />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/community-score" element={<CommunityScore />} />
+        <Route path="/externo" element={<Externo />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 

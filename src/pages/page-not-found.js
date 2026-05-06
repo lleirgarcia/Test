@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
    Estructura principal del componente, return con JSX */
 export default function NotFound() {
   return (
-    <main className="g__page-bg g__page-fill d-flex justify-content-center align-items-center">
+    <main className="d-flex justify-content-center align-items-center">
       <section className="text-center">
         {/* Código de error 404 */}
         <h1 className="pnf__warning-text fw-semibold display-1 mb-2">404</h1>

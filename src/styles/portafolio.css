@@ -4,8 +4,8 @@
    Descripción: Reglas específicas para la página de portafolio personal
    ========================================= */
 
-/* ====== ELEMENTS ======
-   Define estilos base aplicados a etiquetas HTML puras */
+/* ====== HERO ======
+   Estilos generales para la sección de inicio, foto y rol */
 
 /* Foto redonda del hero con borde sutil */
 .p__hero-photo {
@@ -17,9 +17,17 @@
 
 /* Rol o profesión debajo del nombre */
 .p__hero-role {
-  color: rgb(var(--grey));
   margin: 0.15rem 0 0.6rem;
 }
+
+/* Contenedor principal del hero */
+.p__hero {
+  display: flex;
+  align-items: center;
+}
+
+/* ====== HABILIDADES ======
+   Estilos de la sección de skills, puntos indicadores y diseño */
 
 /* Punto indicador de skill */
 .p__skill-dot {
@@ -29,6 +37,9 @@
   background-color: rgb(var(--green));
   border-radius: 50%;
 }
+
+/* ====== BOTONES ======
+   Estilos de botones, deshabilitados e iconos con hover */
 
 /* Botón deshabilitado */
 .p__btn--disabled {
@@ -47,14 +58,8 @@
   filter: brightness(0) saturate(100%);
 }
 
-/* ====== COMPONENTS ======
-   Define componentes de interfaz independientes */
-
-/* Contenedor principal del hero */
-.p__hero {
-  display: flex;
-  align-items: center;
-}
+/* ====== TIMELINE / EXPERIENCIA  ======
+   Estilos de la línea de tiempo, puntos y items */
 
 /* Timeline de experiencia laboral */
 .p__timeline {
@@ -70,14 +75,9 @@
 
 /* Punto circular dentro del timeline */
 .p__timeline-dot {
+  display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgb(0, 179, 126);
-  margin-top: 6px;
-}
-
-/* Texto secundario dentro del timeline */
-.p__timeline-sub {
-  color: rgb(var(--grey));
+  background-color: rgb(var(--green));
 }

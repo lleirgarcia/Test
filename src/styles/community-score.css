@@ -1,7 +1,15 @@
+/* =========================================
+   Archivo: community-score.css
+   Tipo: Hoja de estilos
+   Descripción: Reglas específicas para la página de puntuación comunitaria
+   ========================================= */
+
+/* Fondo para texto de vista previa */
 .cs__bg-previw-text {
     background-color: rgb(var(--background-app));
 }
 
+/* Texto secundario */
 .cs__secondary-text {
     color: rgb(var(--grey))
 }

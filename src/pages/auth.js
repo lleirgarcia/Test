@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
    Estructura principal del componente, return con JSX */
 export default function Login() {
   return (
-    <main className="g__page-bg d-flex justify-content-center align-items-center">
+    <main className="justify-content-center align-items-center">
       <div className="container d-flex flex-column gap-3">
         <section className="g__card login-box p-4 rounded">
           {/* Formulario de autenticación */}

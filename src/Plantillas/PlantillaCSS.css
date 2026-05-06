@@ -4,46 +4,8 @@
    Descripción: [Función técnica del archivo dentro del proyecto]
    ========================================= */
 
-/* ====== SETTINGS ======
-   Define variables y configuraciones globales del sistema */
-
-/* Ejemplo (no reproducible fuera de la plantilla): definir colores primarios,
-   tipografías base, escalas de espaciado */
-
-/* ====== TOOLS ======
-   Contiene recursos reutilizables que apoyan la generación de estilos */
-
-/* Ejemplo (no reproducible fuera de la plantilla): mixins para media queries,
-   funciones para calcular tamaños proporcionales */
-
-/* ====== GENERIC ======
-   Establece reglas globales y normalización base */
-
-/* Ejemplo (no reproducible fuera de la plantilla): reset de márgenes/paddings,
-   box-sizing global, estilos por defecto de html y body */
-
-/* ====== ELEMENTS ======
-   Define estilos base aplicados a etiquetas HTML puras */
-
-/* Ejemplo (no reproducible fuera de la plantilla): h1-h6, p, a, ul, li, button */
-
-/* ====== OBJECTS ======
-   Define estructuras reutilizables orientadas al layout */
-
-/* Ejemplo (comentario solo de demostracion): contenedores flexibles, grids,
-   layouts modulares que se repiten en varias páginas */
-
-/* ====== COMPONENTS ======
-   Define componentes de interfaz independientes */
-
-/* Ejemplo (no reproducible fuera de la plantilla): botones, cards, modales,
-   menús desplegables, formularios */
-
-/* ====== UTILITIES ======
-   Define clases de propósito único con alta prioridad */
-
-/* Ejemplo (no reproducible fuera de la plantilla): ocultar elementos, centrar texto,
-   aplicar margen rápido, mostrar/ocultar flex */
+/* ====== TITULO ======
+   "Descripción" */
 
 /* ==================================================
    PLANTILLA DE COMENTARIOS INTERNOS (no reproducible fuera de la plantilla)

@@ -4,8 +4,8 @@
    Descripción: Reglas globales que afectan a toda la aplicación
    ========================================= */
 
-/* ====== SETTINGS ======
-   Define variables y configuraciones globales del sistema */
+/* ====== VARIABLES ======
+   Definición de colores principales usados en toda la UI */
 
 /* Colores principales usados en la UI */
 :root {
@@ -15,10 +15,12 @@
   --grey: 177, 177, 177; /* Gris para textos secundarios y bordes */
   --red: 224, 46, 42; /* Rojo para alertas/errores */
   --green: 0, 179, 126; /* Verde para elementos destacados */
+  --yellow: 255, 193, 7; /* Amarillo para elementos destacados */
+
 }
 
-/* ====== TOOLS ======
-   Contiene recursos reutilizables que apoyan la generación de estilos */
+/* ====== TIPOGRAFÍA ======
+   Tamaños de texto escalables y clases globales */
 
 /* Tamaños de texto escalables */
 .g__text--xs {
@@ -43,13 +45,14 @@
   font-size: clamp(2rem, 4vw, 2.5rem) !important;
 } /* Super grande: Encabezado principal */
 
-/* ====== GENERIC ======
-   Establece reglas globales y normalización base */
+/* ====== ESTRUCTURA GLOBAL ======
+   Fondo general, contenedor principal y main de páginas */
 
-/* Reset de margen, padding y color de fondo de la página */
+/* Fondo de la web, margen y color de texto general */
 html,
 body {
-  background-color: rgb(var(--background-card)) !important;
+  background-color: rgb(var(--background-card));
+  color: rgb(var(--white)); /* Color de texto general */
   height: 100%;
   margin: 0;
   padding: 0;
@@ -60,34 +63,28 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: rgb(var(--background-app));
 }
 
-/* Main que ocupa todo el espacio vertical restante */
+/* Main de las páginas */
 main {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-/* ====== ELEMENTS ======
-   Define estilos base aplicados a etiquetas HTML puras */
-
-/* Fondo y color principal de la página */
-.g__page-bg {
-  background-color: rgb(var(--background-app));
-  color: rgb(var(--white));
-}
-
-/* Espaciado superior e inferior de la página */
-.g__page-fill {
   padding-top: 3rem;
   padding-bottom: 2rem;
 }
+
+/* ====== TARJETAS ======
+   Fondo y estilos generales para bloques destacados */
 
 /* Fondo para tarjetas o bloques destacados */
 .g__card {
   background-color: rgb(var(--background-card));
 }
+
+/* ====== BOTONES ======
+   Estilo base, hover y transición */
 
 /* Botón base con alineación, borde y transición */
 .g__btn {
@@ -107,8 +104,8 @@ main {
   color: rgb(var(--background-card)) !important;
 }
 
-/* ====== COMPONENTS ======
-   Define componentes de interfaz independientes */
+/* ====== ENLACES ======
+   Estilos globales para links */
 
 /* Enlaces básicos */
 a {
@@ -121,8 +118,27 @@ a:hover {
   color: rgb(var(--grey)) !important;
 }
 
-/* ====== UTILITIES ======
-   Define clases de propósito único con alta prioridad */
+/* ====== COLORES DE TEXTO ======
+   Clases de color global para alertas y destacados */
+
+.g__text-color--red {
+  color: rgb(var(--red)) !important;
+}
+
+.g__text-color--green {
+  color: rgb(var(--green)) !important;
+}
+
+.g__text-color--grey {
+  color: rgb(var(--grey)) !important;
+}
+
+.g__text-color--yellow {
+  color: rgb(var(--yellow)) !important;
+}
+
+/* ====== FORMULARIOS ======
+   Quita outline azul en inputs y selects al enfocarlos */
 
 /* Elimina efecto glow/outline azul en inputs y selects al enfocarlos (Bootsrap) */
 .form-control:focus,

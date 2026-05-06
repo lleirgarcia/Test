@@ -8,7 +8,7 @@
    Estructura principal del componente, return con JSX */
 export default function Footer() {
   return (
-    <footer className="g__page-bg pb-3">
+    <footer className="pb-3">
       <div className="container py-3">
         <div className="g__text--sm d-flex justify-content-between align-items-center">
           {/* Copyright dinámico con año actual */}

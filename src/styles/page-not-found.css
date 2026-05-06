@@ -4,17 +4,11 @@
    Descripción: Reglas específicas para la página de error 404
    ========================================= */
 
-/* ====== ELEMENTS ======
-   Define estilos base aplicados a etiquetas HTML puras */
-
 /* Efecto de hover para un boton */
 .pnf__btn--hover:hover {
   background-color: rgb(var(--white)) !important;
   color: rgb(var(--background-app)) !important;
 }
-
-/* ====== UTILITIES ======
-   Define clases de propósito único con alta prioridad */
 
 /* Texto de advertencia */
 .pnf__warning-text {

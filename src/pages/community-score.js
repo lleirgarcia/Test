@@ -179,17 +179,17 @@ function wordPointsToHtmlWithPoints(wordPoints) {
       const t = escapeHtml(w.token);
       if (w.isIntensifier) {
         // intensificador visual (amarillo) — solo aparece si se usó para potenciar
-        return `<span class="text-warning">${t}</span>`;
+        return `<span class="g__text-color--yellow">${t}</span>`;
       }
       if (w.score > 0) {
         const multLabel =
           w.mult && w.mult !== 1 ? ` • ${formatMultiplierPercent(w.mult)}` : "";
-        return `<span class="text-success">${t} <small>(+${w.score}${multLabel})</small></span>`;
+        return `<span class="g__text-color--green">${t} <small>(+${w.score}${multLabel})</small></span>`;
       }
       if (w.score < 0) {
         const multLabel =
           w.mult && w.mult !== 1 ? ` • ${formatMultiplierPercent(w.mult)}` : "";
-        return `<span class="text-danger">${t} <small>(${w.score}${multLabel})</small></span>`;
+        return `<span class="g__text-color--red">${t} <small>(${w.score}${multLabel})</small></span>`;
       }
       return t;
     })
@@ -201,9 +201,10 @@ function wordPointsToHtml(wordPoints) {
   return wordPoints
     .map((w) => {
       const t = escapeHtml(w.token);
-      if (w.isIntensifier) return `<span class="text-warning">${t}</span>`;
-      if (w.score > 0) return `<span class="text-success">${t}</span>`;
-      if (w.score < 0) return `<span class="text-danger">${t}</span>`;
+      if (w.isIntensifier)
+        return `<span class="g__text-color--yellow">${t}</span>`;
+      if (w.score > 0) return `<span class="g__text-color--green">${t}</span>`;
+      if (w.score < 0) return `<span class="g__text-color--red">${t}</span>`;
       return t;
     })
     .join(" ");
@@ -315,10 +316,8 @@ export default function SocialSentimentProModerator() {
   }, [feed, users]);
 
   return (
-    <main className="g__page-bg g__page-fill">
+    <main>
       <div className="container">
-        <h2 className="g__text--xxl mb-4">Rango Comunitario</h2>
-
         <div className="row g-4">
           {/* Panel de publicación */}
           <div className="col-md-8">
@@ -347,15 +346,15 @@ export default function SocialSentimentProModerator() {
               {/* Preview de post con puntuaciones y multiplicadores aplicados */}
               <div
                 className="cs__bg-previw-text w-100 rounded px-3 py-2 mb-2 bg-opacity-5"
-                style={{ minHeight: 45, opacity: post.trim() ? 1 : 0.5 }}
+                style={{ minHeight: 45 }}
               >
                 {post.trim() ? (
                   <div
-                    className="g__text--sm"
+                    className="g__text--s"
                     dangerouslySetInnerHTML={{ __html: previewHtml }}
                   />
                 ) : (
-                  <div className="g__text--s cs__secondary-text">
+                  <div className="g__text--s g__text-color--grey">
                     Aquí aparecerá el texto analizado...
                   </div>
                 )}
@@ -378,7 +377,7 @@ export default function SocialSentimentProModerator() {
             {/* Lista de posts publicados */}
             <div className="d-flex flex-column gap-3">
               {feed.length === 0 && (
-                <div className="g__card g__text--md p-3 rounded text-secondary">
+                <div className="g__card g__text--md g__text-color--grey p-3 rounded">
                   Sin posts — publica para probar.
                 </div>
               )}
@@ -394,7 +393,15 @@ export default function SocialSentimentProModerator() {
                       alt=""
                     />
                     <div className="fw-semibold">{it.user.name}</div>
-                    <div className="ms-auto text-secondary">
+                    <div
+                      className={`g__text--sm ms-auto ${
+                        it.score > 0
+                          ? "g__text-color--green"
+                          : it.score < 0
+                            ? "g__text-color--red"
+                            : "g__text-color--grey"
+                      }`}
+                    >
                       Score: {it.score}
                     </div>
                   </div>
@@ -407,7 +414,7 @@ export default function SocialSentimentProModerator() {
                   />
 
                   {/* Resumen de cantidad de palabras buenas y malas */}
-                  <div className="text-secondary g__text--sm">
+                  <div className="g__text--sm g__text-color--grey">
                     Buenas: {it.good} | Malas: {it.bad}
                   </div>
                 </div>
@@ -420,30 +427,36 @@ export default function SocialSentimentProModerator() {
             {/* Resumen general de la comunidad */}
             <div className="g__card p-4 rounded mb-3">
               <div className="fw-semibold mb-2">Estado general</div>
-              <div className="text-secondary">
+              <div className="g__text-color--grey">
                 Posts totales: {community.totalPosts}
               </div>
-              <div className="text-secondary mb-2">
+              <div className="g__text-color--grey">
                 Media de reputación: {community.avgScore}
               </div>
-              <div className="text-secondary mt-2">
-                Comunidad{" "}
-                {community.avgScore > 20
-                  ? "saludable ✅"
-                  : community.avgScore < -20
-                    ? "muy tóxica 🚨"
-                    : "neutral ⚖️"}
+              <div>
+                <span className="g__text-color--grey me-">Comunidad:</span>{" "}
+                {community.avgScore > 20 ? (
+                  <span className="g__text-color--green">Saludable</span>
+                ) : community.avgScore > 0 ? (
+                  <span className="g__text-color--green">Ligeramente positiva</span>
+                ) : community.avgScore === 0 ? (
+                  <span className="g__text-color--grey">Neutral</span>
+                ) : community.avgScore >= -20 ? (
+                  <span className="g__text-color--yellow">Algo tóxica</span>
+                ) : (
+                  <span className="g__text-color--red">Tóxica</span>
+                )}
               </div>
             </div>
 
             {/* Lista de usuarios con score positivo */}
             <div className="g__card p-3 rounded mb-3">
-              <div className="fw-semibold text-success mb-2">
+              <div className="g__text-color--green fw-semibold mb-2">
                 ✅ Usuarios buenos
               </div>
 
               {community.goodUsers.length === 0 ? (
-                <div className="g__text--sm text-secondary">
+                <div className="g__text-color--grey g__text--sm">
                   Nadie destacado todavía.
                 </div>
               ) : (
@@ -461,12 +474,12 @@ export default function SocialSentimentProModerator() {
 
             {/* Lista de usuarios con score negativo */}
             <div className="g__card p-3 rounded mb-3">
-              <div className="fw-semibold text-danger mb-2">
+              <div className="g__text-color--red fw-semibold mb-2">
                 🚫 Usuarios tóxicos
               </div>
 
               {community.badUsers.length === 0 ? (
-                <div className="g__text--sm text-secondary">
+                <div className="g__text-color--grey g__text--sm">
                   Ningún usuario problemático.
                 </div>
               ) : (
@@ -484,8 +497,10 @@ export default function SocialSentimentProModerator() {
 
             {/* Instrucciones de uso de la app */}
             <div className="g__card p-3 rounded mb-3">
-              <div className="fw-semibold mb-2">Cómo usar la aplicación</div>
-              <ul className="g__text--sm text-secondary mb-0">
+              <div className="g__text--md fw-semibold mb-2">
+                Cómo usar la aplicación
+              </div>
+              <ul className="g__text--sm g__text-color--grey mb-0">
                 <li>
                   Escribe un post y presiona <b>Publicar</b>. La app analiza
                   cada palabra.
@@ -510,8 +525,10 @@ export default function SocialSentimentProModerator() {
                   limpiar o guardar la información.
                 </li>
                 <li>
-                  ⚠️ Nota: La app es limitada y es solo un ejemplo básico. No es
-                  compleja ni exhaustiva.
+                  <b>
+                    Nota: La app es limitada y es solo un ejemplo básico. No es
+                    compleja ni exhaustiva.
+                  </b>
                 </li>
               </ul>
             </div>

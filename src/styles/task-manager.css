@@ -4,8 +4,7 @@
    Descripción: Reglas específicas para la página de gestión de tareas
    ========================================= */
 
-/* ====== TOOLS ======
-   Contiene recursos reutilizables que apoyan la generación de estilos */
+/* ====== TARJETAS / DESCRIPCIONES ====== */
 
 /* Truncado a máximo 2 líneas con ellipsis para descripciones de tarea */
 .tm__two-lines {
@@ -16,16 +15,8 @@
   text-overflow: ellipsis;
 }
 
-/* ====== GENERIC ======
-   Establece reglas globales y normalización base */
-
-/* Subtítulo con fechas de creación/modificación de tareas */
-.tm__timeline-sub {
-  color: rgb(var(--grey));
-}
-
-/* ====== ELEMENTS ======
-   Define estilos base aplicados a etiquetas HTML puras */
+/* ====== TAGS ======
+   Estilos de tags, truncado y tooltips responsivos */
 
 /* Tag individual con truncado responsivo */
 .tm__tag-item {
@@ -50,21 +41,6 @@
     transform 120ms ease;
 }
 
-/* Botón eliminar dentro de tarjeta */
-.tm__btn--remove {
-  background-color: rgb(var(--red));
-  color: rgb(var(--white));
-  border: none;
-}
-
-.tm__btn--remove:hover {
-  color: rgba(var(--white), 0.6) !important;
-  background-color: rgba(var(--red), 0.6) !important;
-}
-
-/* ====== OBJECTS ======
-   Define estructuras reutilizables orientadas al layout */
-
 /* Contenedor relativo para tooltip de tags */
 .tm__tag-wrapper {
   position: relative;
@@ -79,12 +55,19 @@
   transform: translateX(-50%) translateY(0);
 }
 
-/* ====== COMPONENTS ======
-   Define componentes de interfaz independientes */
+/* ====== BOTONES ======
+   Botón eliminar y estados hover/activo para controles */
 
-/* Contenedor superior de botones (vista lista/tablero) */
-.tm__button-list {
-  margin-bottom: -1rem;
+/* Botón eliminar dentro de tarjeta */
+.tm__btn--remove {
+  background-color: rgb(var(--red));
+  color: rgb(var(--white));
+  border: none;
+}
+
+.tm__btn--remove:hover {
+  color: rgba(var(--white), 0.6) !important;
+  background-color: rgba(var(--red), 0.6) !important;
 }
 
 /* Estado hover y activo de botones de control */
@@ -92,6 +75,14 @@
 .tm__btn--hover.tm__btn--active {
   background-color: rgb(var(--white));
   color: rgb(var(--background-card));
+}
+
+/* ====== CONTENEDORES ======
+   Contenedores generales y posiciones relativas */
+
+/* Contenedor superior de botones (vista lista/tablero) */
+.tm__button-list {
+  margin-bottom: -1rem;
 }
 
 /* Contenedor de botones flotantes en tarjeta */
