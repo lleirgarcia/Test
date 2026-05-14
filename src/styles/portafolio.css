@@ -1,83 +1,467 @@
 /* =========================================
    Archivo: portafolio.css
    Tipo: Hoja de estilos
-   Descripción: Reglas específicas para la página de portafolio personal
+   Descripción: Tema Vercel/Linear-style (Geist, zinc, hairlines)
    ========================================= */
 
-/* ====== HERO ======
-   Estilos generales para la sección de inicio, foto y rol */
+:root {
+  --bg: #0a0a0a;
+  --bg-elev: #111111;
+  --bg-hover: #161616;
+  --border: #1f1f1f;
+  --border-strong: #2a2a2a;
+  --text: #ededed;
+  --text-soft: #a1a1aa;
+  --text-dim: #71717a;
+  --text-faint: #52525b;
+  --accent: #ededed;
+  --status: #4ade80;
+  --link: #ededed;
+  --warn: #facc15;
+}
 
-/* Foto redonda del hero con borde sutil */
-.p__hero-photo {
-  width: 120px;
-  height: 120px;
+/* Aplicado a body solo cuando se monta el Portafolio. */
+body.theme-paper,
+body.theme-paper #root {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.theme-paper {
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: "ss01", "ss02", "cv11";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.theme-paper main {
+  padding-top: clamp(3rem, 8vh, 5rem);
+  padding-bottom: 4rem;
+}
+
+body.theme-paper .container {
+  max-width: 720px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+body.theme-paper .g__card { background: transparent; }
+body.theme-paper a,
+body.theme-paper a:hover { color: var(--link) !important; }
+
+/* =========================================
+   PRIMITIVAS
+   ========================================= */
+
+.v-mono {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-feature-settings: "ss03", "ss04";
+}
+
+.v-dim { color: var(--text-dim); }
+.v-soft { color: var(--text-soft); }
+
+.v-link {
+  color: var(--text) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--text-faint);
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.v-link:hover {
+  border-bottom-color: var(--text);
+}
+
+/* =========================================
+   STATUS PILL
+   ========================================= */
+
+.v-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-soft);
+  background: var(--bg-elev);
+}
+
+.v-status-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  border: 3px solid rgba(var(--white), 0.05);
+  background: var(--status);
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
 }
 
-/* Rol o profesión debajo del nombre */
-.p__hero-role {
-  margin: 0.15rem 0 0.6rem;
+.v-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--status);
+  opacity: 0.4;
+  animation: v-pulse 1.8s ease-out infinite;
 }
 
-/* Contenedor principal del hero */
-.p__hero {
+@keyframes v-pulse {
+  0% { transform: scale(0.6); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* =========================================
+   HERO
+   ========================================= */
+
+.v-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.v-hero-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-/* ====== HABILIDADES ======
-   Estilos de la sección de skills, puntos indicadores y diseño */
+.v-hero-avatar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
 
-/* Punto indicador de skill */
-.p__skill-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: rgb(var(--green));
+.v-hero-avatar img {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid var(--border);
 }
 
-/* ====== BOTONES ======
-   Estilos de botones, deshabilitados e iconos con hover */
+.v-hero-avatar .who { display: flex; flex-direction: column; line-height: 1.2; }
+.v-hero-avatar .name { color: var(--text); font-weight: 500; font-size: 14px; }
+.v-hero-avatar .handle { color: var(--text-dim); font-size: 12px; font-family: "Geist Mono", monospace; }
 
-/* Botón deshabilitado */
-.p__btn--disabled {
-  background-color: rgb(var(--red));
-  color: rgb(var(--white));
-  cursor: not-allowed;
+.v-headline {
+  font-size: clamp(1.65rem, 3.2vw, 2.1rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-weight: 500;
+  margin: 0;
+  max-width: 32ch;
 }
 
-/* Icono dentro del botón con transición */
-.p__btn-img--hover img {
-  transition: filter 0.3s ease;
+.v-headline .v-soft { color: var(--text-soft); font-weight: 400; }
+
+.v-bio {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-soft);
+  margin: 0;
+  max-width: 60ch;
 }
 
-/* Hover de icono dentro del botón */
-.p__btn-img--hover:hover img {
-  filter: brightness(0) saturate(100%);
+.v-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  padding-top: 0.5rem;
 }
 
-/* ====== TIMELINE / EXPERIENCIA  ======
-   Estilos de la línea de tiempo, puntos y items */
+.v-meta-row span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.v-meta-row .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-faint); }
 
-/* Timeline de experiencia laboral */
-.p__timeline {
+/* =========================================
+   SECCIÓN GENÉRICA
+   ========================================= */
+
+.v-section {
+  padding-top: 3rem;
+}
+
+.v-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.v-section-head h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  text-transform: none;
+}
+
+.v-section-head .v-count {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* =========================================
+   STACK — chips monospace planos
+   ========================================= */
+
+.v-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 1rem;
+}
+
+.v-chip {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-soft);
+  background: var(--bg-elev);
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.v-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: var(--bg-hover);
+}
+
+/* =========================================
+   LISTA DE FILAS (proyectos, experiencia, estudios)
+   ========================================= */
+
+.v-list {
   display: flex;
   flex-direction: column;
 }
 
-/* Cada item dentro del timeline */
-.p__timeline-item {
-  display: flex;
-  align-items: flex-start;
+.v-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none !important;
+  transition: background 140ms ease, padding 140ms ease;
 }
 
-/* Punto circular dentro del timeline */
-.p__timeline-dot {
+a.v-row { color: var(--text) !important; }
+
+a.v-row:hover {
+  background: var(--bg-elev);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+a.v-row:hover .v-row-arrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.v-row:last-child { border-bottom: none; }
+
+.v-row-when {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.v-row-main { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+
+.v-row-title {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.v-row-title .v-row-org {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.v-row-desc {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.v-row-meta {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.v-row-arrow {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: rgb(var(--green));
+  opacity: 0;
+  transition: opacity 160ms ease, transform 160ms ease;
+  color: var(--text-soft);
+}
+
+.v-row[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+.v-row[aria-disabled="true"] .v-row-meta { color: var(--warn); }
+
+/* =========================================
+   ENTRADA — fade-in sutil
+   ========================================= */
+
+body.theme-paper .v-reveal {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: v-in 520ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+body.theme-paper .v-reveal:nth-child(1) { animation-delay: 40ms; }
+body.theme-paper .v-reveal:nth-child(2) { animation-delay: 110ms; }
+body.theme-paper .v-reveal:nth-child(3) { animation-delay: 180ms; }
+body.theme-paper .v-reveal:nth-child(4) { animation-delay: 250ms; }
+body.theme-paper .v-reveal:nth-child(5) { animation-delay: 320ms; }
+body.theme-paper .v-reveal:nth-child(6) { animation-delay: 390ms; }
+
+@keyframes v-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   FOOTER en theme dark Vercel-style
+   ========================================= */
+
+body.theme-paper footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+body.theme-paper footer .container,
+body.theme-paper footer .container.footer-grid,
+body.theme-paper footer .footer-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  max-width: 720px;
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+body.theme-paper .footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+body.theme-paper footer a {
+  color: var(--text-soft) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid transparent;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+body.theme-paper footer a:hover {
+  color: var(--text) !important;
+  border-bottom-color: var(--text-faint);
+}
+
+body.theme-paper .footer-locale {
+  display: block;
+  justify-self: end;
+  color: var(--text-dim);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 640px) {
+  body.theme-paper .container { padding-left: 1.1rem; padding-right: 1.1rem; }
+
+  .v-row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+    padding: 0.85rem 0;
+  }
+  .v-row-when { order: -1; }
+  .v-row-meta { order: 99; padding-top: 0.2rem; }
+
+  a.v-row:hover { padding-left: 0; padding-right: 0; }
+
+  body.theme-paper footer .container,
+  body.theme-paper footer .container.footer-grid,
+  body.theme-paper footer .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  body.theme-paper .footer-locale { justify-self: center; }
+}
+
+/* Reset de clases del diseño anterior por seguridad */
+.p__hero,
+.p__hero-photo,
+.p__hero-role,
+.p__skill-dot,
+.p__btn--disabled,
+.p__btn-img--hover img,
+.p__timeline,
+.p__timeline-item,
+.p__timeline-dot,
+.ed-display,
+.ed-serif,
+.ed-mono,
+.ed-eyebrow,
+.ed-topbar,
+.ed-section,
+.ed-section-head,
+.ed-hero,
+.ed-hero-meta,
+.ed-hero-bio,
+.ed-hero-photo,
+.ed-hero-id,
+.ed-index,
+.ed-index-row,
+.ed-projects,
+.ed-project,
+.ed-project-cta,
+.ed-project-foot,
+.ed-project-tag,
+.ed-table,
+.ed-row {
+  all: unset;
 }

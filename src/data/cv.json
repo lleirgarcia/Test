@@ -1,0 +1,88 @@
+{
+  "profile": {
+    "name": "Henar Garcia Boada",
+    "handle": "@henar",
+    "title": "Desarrollador Full-Stack Junior",
+    "currentStatus": "Empleado en MIM Automation · busco primera oportunidad como Full-Stack",
+    "location": "Llinars del Vallès, Cataluña, España",
+    "languages": [
+      { "name": "Catalán", "level": "Nativo / Bilingüe" },
+      { "name": "Español", "level": "Nativo / Bilingüe" },
+      { "name": "Inglés", "level": "Elemental" }
+    ],
+    "contact": {
+      "phone": "688 644 970",
+      "email": "hegarbod@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/henar-garcia-boada-145893201",
+      "website": "https://test-gules-ten-34.vercel.app/",
+      "github": "https://github.com/henar2004"
+    }
+  },
+  "summary": "Desarrollador Full-Stack Junior con experiencia en React, Next.js, JavaScript, CSS y Bootstrap. Actualmente desarrolla proyectos completos desplegados en Vercel, utilizando API Routes, serverless functions, Fetch, MongoDB Atlas y CI/CD con GitHub. Foco en resolver problemas, aplicar buenas prácticas y entregar proyectos funcionales. Busca su primera oportunidad profesional para aplicar sus habilidades en un equipo de desarrollo y seguir creciendo como Full-Stack Developer.",
+  "topSkills": [
+    "Microsoft Visual Studio Code",
+    "Integración continua y entrega continua (CI/CD)",
+    "Transferencia de Estado Representacional (REST)"
+  ],
+  "stack": {
+    "frontend": ["React", "Next.js", "JavaScript", "HTML", "CSS", "Bootstrap"],
+    "backend": ["Node.js", "API Routes", "Serverless functions", "Fetch", "REST"],
+    "data": ["MongoDB Atlas"],
+    "platform": ["Vercel", "GitHub", "CI/CD"],
+    "tools": ["VS Code", "Git"],
+    "alsoFamiliarWith": ["WordPress", "Elementor", "Java", "Python"]
+  },
+  "experience": [
+    {
+      "role": "Empleado",
+      "company": "MIM Automation",
+      "period": { "start": "2026-04", "end": null, "label": "Abril 2026 — Actualidad" },
+      "ongoing": true,
+      "description": ""
+    },
+    {
+      "role": "Empleado",
+      "company": "McDonald's",
+      "location": "Granollers",
+      "period": { "start": "2025-04", "end": "2026-04", "label": "Abril 2025 — Abril 2026 (1 año 1 mes)" },
+      "ongoing": false,
+      "description": ""
+    },
+    {
+      "role": "Diseñador de publicaciones",
+      "company": "KIT DIGITAL",
+      "location": "Sant Celoni, Cataluña, España",
+      "period": { "start": "2025-03", "end": "2025-12", "label": "Marzo 2025 — Diciembre 2025 (10 meses)" },
+      "ongoing": false,
+      "description": "Producción de contenido publicitario para redes sociales (Instagram, Facebook, LinkedIn), ajustando cada campaña a la identidad de marca y a los objetivos del cliente. Contacto directo con clientes para recoger requisitos, adaptar propuestas y asegurar que el resultado final cumpliera sus expectativas."
+    },
+    {
+      "role": "Diseñador web",
+      "company": "KIT DIGITAL",
+      "location": "Sant Celoni",
+      "period": { "start": "2024-03", "end": "2024-09", "label": "Marzo 2024 — Septiembre 2024 (7 meses)" },
+      "ongoing": false,
+      "description": "Diseño y desarrollo de sitios con WordPress y Elementor, creando páginas personalizadas y funcionales según las necesidades de los clientes. Mejoras de diseño con CSS y JavaScript, e implementación de funcionalidades como tiendas online, secciones interactivas y sistemas de reseñas. Reuniones periódicas con clientes para validar diseño y recoger feedback."
+    },
+    {
+      "role": "Técnico de TI",
+      "company": "Miscota",
+      "location": "Llinars del Vallès",
+      "period": { "start": "2021-05", "end": "2022-01", "label": "Mayo 2021 — Enero 2022 (9 meses)" },
+      "ongoing": false,
+      "description": "Soporte técnico: reparación y mantenimiento de ordenadores portátiles, instalación y configuración de software, y gestión de bases de datos en Excel. Soporte a tiendas con incidencias informáticas."
+    }
+  ],
+  "education": [
+    {
+      "school": "Escola Ginebró",
+      "title": "CFGS · Desarrollo de Aplicaciones Multiplataforma",
+      "period": "Septiembre 2022 — Mayo 2024"
+    },
+    {
+      "school": "Escola Ginebró",
+      "title": "CFGM · Sistemas Microinformáticos y Redes",
+      "period": "Septiembre 2020 — Mayo 2022"
+    }
+  ]
+}

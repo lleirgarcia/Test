@@ -1,275 +1,232 @@
 /* =========================================
    Archivo: Portafolio.js
    Tipo: Pagina
-   Descripción: Página de portafolio personal con secciones de Hero, Habilidades, Proyectos, Experiencia y Estudios
+   Descripción: Portafolio de Henar Garcia Boada — datos basados en cv.json
    ========================================= */
 
-/* ====== IMPORTS ======
-   Importaciones de librerías, hooks, componentes y recursos */
-import myPhoto from "../images/mi-cara.png";
-import webIcon from "../images/link.png";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import myPhoto from "../images/mi-cara.png";
+import cv from "../data/cv.json";
 
-/* ====== CONSTANTES / DATOS ======
-   Datos estáticos, arrays de opciones, configuraciones internas */
-
-// Habilidades del portafolio: lista de tecnologías y lenguajes que domina el desarrollador
-const skills = [
-  "Lua",
-  "Python",
-  "Kotlin",
-  "C#",
-  "Java",
+const stack = [
   "React",
+  "Next.js",
+  "JavaScript",
+  "Node.js",
+  "MongoDB",
+  "API Routes",
+  "Serverless",
+  "Fetch",
+  "REST",
+  "CI/CD",
+  "GitHub",
+  "Vercel",
   "Bootstrap",
   "CSS",
-  "JavaScript",
-  "Laravel",
-  "Express",
-  "API",
-  "Serverless",
-  "MongoDB",
-  "GitHub",
-  "CI/CD",
-  "UI",
-  "Diseño",
+  "HTML",
+  "VS Code",
+  "WordPress",
+  "Elementor",
 ];
 
-// Proyectos: lista de proyectos a mostrar en la sección de portfolio con título, descripción y enlace
 const projects = [
   {
     title: "Gestor de tareas",
-    description: "App simple de gestión de tareas con el sistema CRUD.",
+    description: "App de gestión de tareas con CRUD y persistencia en MongoDB Atlas.",
     link: "/gestor-de-tareas",
+    year: "2025",
+    stack: "React · Serverless · Mongo",
   },
   {
     title: "Puntuación comunitaria",
-    description: "App que analiza texto y asigna una puntuación de toxicidad.",
+    description: "Analiza texto y asigna una puntuación de toxicidad vía API.",
     link: "/community-score",
+    year: "2025",
+    stack: "React · API",
   },
   {
     title: "Transcriptor de videos",
-    description: "App que transcribe el audio de un video usando una API.",
+    description: "Transcribe el audio de un vídeo usando una API.",
     link: "#",
+    year: "2025",
+    stack: "API · Audio",
   },
   {
     title: "Explorador de ciudades",
-    description: "App de busqueda de información sobre ciudades usando APIs.",
+    description: "Búsqueda de información sobre ciudades a través de APIs.",
     link: "#",
+    year: "2024",
+    stack: "React · APIs",
   },
   {
     title: "Retro shooter",
-    description: "Juego de disparos desarrollado con JavaScript y HTML.",
+    description: "Juego arcade de disparos en JavaScript y HTML canvas.",
     link: "#",
+    year: "2024",
+    stack: "JS · Canvas",
   },
   {
     title: "Ajedrez 2D",
-    description: "Juego de ajedrez desarrollado con JavaScript y HTML.",
+    description: "Juego de ajedrez con tablero 2D y reglas completas.",
     link: "#",
+    year: "2023",
+    stack: "JS · HTML",
   },
 ];
 
-// Experiencia laboral: lista de trabajos y roles con título, periodo y descripción de responsabilidades
-const experience = [
-  {
-    title: "Empleado - McDonald's",
-    period: "Abril 2025 - Actualidad",
-    startIso: "2025-04",
-    endIso: null, // null porque sigue en curso
-    description: "Atención a clientes, gestión de pagos, trabajo en equipo bajo presión.",
-  },
-  {
-    title: "Diseñadora de publicidad - KIT DIGITAL",
-    period: "Marzo 2025 - Diciembre 2025",
-    startIso: "2025-03",
-    endIso: "2025-12",
-    description: "Contenido publicitario para redes sociales, contacto con clientes.",
-  },
-  {
-    title: "Diseñadora Web - KIT DIGITAL",
-    period: "Marzo 2024 - Agosto 2024",
-    startIso: "2024-03",
-    endIso: "2024-08",
-    description: "Páginas web, contenido publicitario y gestión de clientes.",
-  },
-  {
-    title: "Técnico de TI - Miscota",
-    period: "Febrero 2021 - Marzo 2022",
-    startIso: "2021-02",
-    endIso: "2022-03",
-    description: "Reparación de ordenadores, soporte técnico remoto, bases de datos.",
-  },
-];
+const renderWhen = (period) => {
+  const s = period.start?.slice(0, 4);
+  if (!period.end) return `${s} →`;
+  const e = period.end?.slice(0, 4);
+  return s === e ? s : `${s} — ${e.slice(2)}`;
+};
 
-// Estudios académicos: lista de formaciones relevantes con título y periodo
-const education = [
-  {
-    title: "CFGM - Sistemas Microinformáticos y Redes",
-    period: "Sept 2020 - Mayo 2022",
-    startIso: "2020-09",
-    endIso: "2022-05",
-  },
-  {
-    title: "CFGS - Desarrollo de Aplicaciones Multiplataforma",
-    period: "Sept 2022 - Mayo 2024",
-    startIso: "2022-09",
-    endIso: "2024-05",
-  },
-];
-
-/* ====== RENDER / JSX ======
-   Estructura principal del componente, return con JSX */
 export default function Portafolio() {
+  useEffect(() => {
+    document.body.classList.add("theme-paper");
+    return () => document.body.classList.remove("theme-paper");
+  }, []);
+
   return (
     <main>
       <div className="container">
-        {/* HERO / INICIO */}
-        <header id="inicio" className="p__hero gap-3 mb-5">
-          <img
-            src={myPhoto}
-            alt="Henar Garcia Boada"
-            className="p__hero-photo"
-          />
-          {/* Información personal: nombre, rol y descripción */}
-          <div>
-            <h1 className="g__text--xl m-0">Henar Garcia Boada</h1>
-            <p className="g__text--md g__text-color--grey p__hero-role fw-semibold">
-              Desarrollador Web · Tecnología & Programación
-            </p>
-            <p className="g__text--md m-0">
-              Soy una persona optimista, entusiasta y persistente, con pasión
-              por la tecnología y la programación. Me especializo en desarrollo
-              Fullstack, trabajando tanto en frontend como backend con múltiples
-              lenguajes y frameworks, creando aplicaciones completas y
-              funcionales, siempre buscando aprender y mejorar mis habilidades.
-            </p>
-          </div>
-        </header>
-
-        {/* HABILIDADES / ATRIBUTOS */}
-        <section className="mb-4">
-          <h5 className="g__text--lg fw-semibold mb-3">
-            Habilidades & Tecnologías
-          </h5>
-          <div className="g__card p-4 rounded">
-            <div className="row g-3">
-              {skills.map((skill, i) => (
-                <div
-                  key={i}
-                  className="col-6 col-md-2 d-flex align-items-center"
-                >
-                  {/* Punto visual de skill */}
-                  <span className="p__skill-dot me-2" />
-                  {/* Nombre de la skill */}
-                  <span className="g__text--md">{skill}</span>
-                </div>
-              ))}
+        {/* ===== HERO ===== */}
+        <section className="v-hero">
+          <div className="v-hero-top v-reveal">
+            <div className="v-hero-avatar">
+              <img src={myPhoto} alt={cv.profile.name} />
+              <div className="who">
+                <span className="name">{cv.profile.name}</span>
+                <span className="handle">{cv.profile.handle} — Fullstack Junior</span>
+              </div>
             </div>
+
+            <span className="v-status" aria-label="Estado profesional">
+              <span className="v-status-dot" />
+              Busco primera oportunidad
+            </span>
+          </div>
+
+          <h1 className="v-headline v-reveal">
+            {cv.profile.title}.{" "}
+            <span className="v-soft">
+              Construyo apps en React + Next.js sobre Vercel, con MongoDB Atlas y
+              funciones serverless.
+            </span>
+          </h1>
+
+          <p className="v-bio v-reveal">
+            {cv.summary}
+          </p>
+
+          <div className="v-meta-row v-reveal">
+            <span>Llinars del Vallès · Cataluña</span>
+            <span className="dot" />
+            <span>CA · ES · EN</span>
+            <span className="dot" />
+            <span>Open to work</span>
           </div>
         </section>
 
-        {/* PROYECTOS */}
-        <section className="mb-4">
-          <h5 className="g__text--lg fw-semibold mb-3">Proyectos</h5>
-          <div className="row g-4">
-            {projects.map((project ,i) => (
-              <div className="col-md-4" key={i}>
-                <div className="g__card p-4 rounded h-100 d-flex flex-column justify-content-between position-relative">
-                  {/* Título y descripción del proyecto */}
-                  <div>
-                    <h6 className="g__text--md fw-semibold">
-                      {project.title}
-                    </h6>
-                    <p className="mb-0">{project.description}</p>
+        {/* ===== STACK ===== */}
+        <section className="v-section">
+          <div className="v-section-head">
+            <h2>Stack</h2>
+            <span className="v-count">{stack.length}</span>
+          </div>
+          <div className="v-stack">
+            {stack.map((s) => (
+              <span className="v-chip" key={s}>{s}</span>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== PROYECTOS ===== */}
+        <section className="v-section">
+          <div className="v-section-head">
+            <h2>Proyectos</h2>
+            <span className="v-count">{projects.length}</span>
+          </div>
+          <div className="v-list">
+            {projects.map((p) => {
+              const available = p.link !== "#";
+              const Inner = (
+                <>
+                  <span className="v-row-when v-mono">{p.year}</span>
+                  <div className="v-row-main">
+                    <span className="v-row-title">{p.title}</span>
+                    <span className="v-row-desc">{p.description}</span>
                   </div>
-                  {/* Botón de enlace o disabled según disponibilidad */}
-                  <div className="d-flex gap-3 mt-3 align-items-center">
-                    {project.link !== "#" ? (
-                      <Link
-                        to={project.link}
-                        className="g__text--md g__btn g__btn--hover p__btn-img--hover fw-semibold d-flex align-items-center gap-2"
-                      >
-                        <img src={webIcon} alt="" width={18} height={18} />
-                        Abrir
-                      </Link>
+                  <span className="v-row-meta">
+                    {available ? (
+                      <>
+                        {p.stack}
+                        <span className="v-row-arrow">↗</span>
+                      </>
                     ) : (
-                      <button
-                        className="g__text--md g__btn p__btn--disabled fw-semibold d-flex align-items-center gap-2"
-                        disabled
-                      >
-                        <img src={webIcon} alt="" width={18} height={18} />
-                        No disponible
-                      </button>
+                      <>En curso</>
                     )}
-                  </div>
+                  </span>
+                </>
+              );
+              return available ? (
+                <Link to={p.link} key={p.title} className="v-row">
+                  {Inner}
+                </Link>
+              ) : (
+                <div key={p.title} className="v-row" aria-disabled="true">
+                  {Inner}
                 </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ===== EXPERIENCIA ===== */}
+        <section className="v-section">
+          <div className="v-section-head">
+            <h2>Experiencia</h2>
+            <span className="v-count">{cv.experience.length}</span>
+          </div>
+          <div className="v-list">
+            {cv.experience.map((e) => (
+              <div className="v-row" key={e.role + e.company + e.period.start}>
+                <span className="v-row-when v-mono">{renderWhen(e.period)}</span>
+                <div className="v-row-main">
+                  <span className="v-row-title">
+                    {e.role}{" "}
+                    <span className="v-row-org">· {e.company}</span>
+                  </span>
+                  {e.description && (
+                    <span className="v-row-desc">{e.description}</span>
+                  )}
+                </div>
+                <span className="v-row-meta">
+                  {e.ongoing ? "en curso" : ""}
+                </span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* EXPERIENCIA LABORAL */}
-        <section className="mb-4">
-          <h5 className="g__text--lg fw-semibold mb-3">Experiencia Laboral</h5>
-          <div className="g__card p-4 rounded">
-            <div className="p__timeline gap-3">
-              {experience.map((exp, i) => (
-                <div key={i} className="d-flex gap-3 align-items-start">
-                  {/* Dot de la línea de tiempo */}
-                  <div className="p__timeline-dot mt-1" />
-                  {/* Contenido de la experiencia: título y detalles */}
-                  <div className="d-flex flex-column">
-                    <h6 className="g__text--md fw-semibold mb-1">
-                      {exp.title}
-                    </h6>
-                    <div className="g__text--md g__text-color--grey">
-                      {/* Fechas con dateTime para semántica */}
-                      <time dateTime={exp.startIso}>
-                        {exp.period.split("-")[0].trim()}
-                      </time>
-                      <span> - </span>
-                      {exp.endIso ? (
-                        <time dateTime={exp.endIso}>
-                          {exp.period.split("-")[1].trim()}
-                        </time>
-                      ) : (
-                        "Actualidad"
-                      )}
-                      <span> · {exp.description}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* ===== FORMACIÓN ===== */}
+        <section className="v-section">
+          <div className="v-section-head">
+            <h2>Formación</h2>
+            <span className="v-count">{cv.education.length}</span>
           </div>
-        </section>
-
-        {/* ESTUDIOS */}
-        <section className="mb-4">
-          <h5 className="g__text--lg fw-semibold mb-3">Estudios</h5>
-          <div className="row g-4">
-            {education.map((edu, i) => (
-              <div key={i} className="col-md-6">
-                <div className="g__card p-3 rounded d-flex flex-column justify-content-center">
-                  {/* Título del estudio */}
-                  <div className="g__text--md fw-semibold mb-1">
-                    {edu.title}
-                  </div>
-                  {/* Periodo del estudio con dateTime */}
-                  <div className="g__text--md g__text-color--grey">
-                    <time dateTime={edu.startIso}>
-                      {edu.period.split("-")[0].trim()}
-                    </time>
-                    <span> - </span>
-                    {edu.endIso ? (
-                      <time dateTime={edu.endIso}>
-                        {edu.period.split("-")[1].trim()}
-                      </time>
-                    ) : (
-                      "Actualidad"
-                    )}
-                  </div>
+          <div className="v-list">
+            {cv.education.map((edu) => (
+              <div className="v-row" key={edu.title}>
+                <span className="v-row-when v-mono">
+                  {edu.period.split("—")[0].trim().slice(-4)} — {edu.period.split("—")[1].trim().slice(-4).slice(2)}
+                </span>
+                <div className="v-row-main">
+                  <span className="v-row-title">{edu.title}</span>
+                  <span className="v-row-desc">{edu.school}</span>
                 </div>
+                <span className="v-row-meta">—</span>
               </div>
             ))}
           </div>

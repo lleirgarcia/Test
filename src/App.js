@@ -20,6 +20,7 @@ import "./styles/task-manager.css";
 import "./styles/portafolio.css";
 import "./styles/page-not-found.css";
 import "./styles/community-score.css";
+import "./styles/chatbot.css";
 
 // Páginas y componentes
 import Portafolio from "./pages/portafolio.js";
@@ -30,6 +31,7 @@ import NavBar from "./components/navbar.js";
 import Auth from "./pages/auth.js";
 import CommunityScore from "./pages/community-score.js";
 import Externo from "./pages/externo.js";
+import Chatbot from "./components/chatbot.js";
 
 /* ====== CONSTANTES / DATOS ======
    Datos estáticos, arrays de opciones, configuraciones internas */
@@ -63,6 +65,9 @@ function AnimatedRoutes() {
     displayLocation.pathname,
   );
 
+  // Mostrar Chatbot solo en la home del portafolio
+  const showChatbot = displayLocation.pathname === "/";
+
   return (
     <>
       {/* Si se cumple muestra la NavBar y pasa la ubicación actual al componente */}
@@ -80,6 +85,9 @@ function AnimatedRoutes() {
 
       {/* Si se cumple muestra el Footer */}
       {showFooter && <Footer />}
+
+      {/* Chatbot — disponible en la home */}
+      {showChatbot && <Chatbot />}
     </>
   );
 }

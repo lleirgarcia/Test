@@ -1,0 +1,392 @@
+/* =========================================
+   Archivo: chatbot.css
+   Tipo: Hoja de estilos
+   Descripción: Chatbot flotante — Vercel/Linear-style
+   ========================================= */
+
+:root {
+  --cbot-bg: #0a0a0a;
+  --cbot-elev: #111111;
+  --cbot-hover: #161616;
+  --cbot-border: #1f1f1f;
+  --cbot-border-strong: #2a2a2a;
+  --cbot-text: #ededed;
+  --cbot-soft: #a1a1aa;
+  --cbot-dim: #71717a;
+  --cbot-status: #4ade80;
+  --cbot-danger: #ef4444;
+  --cbot-bubble-bot: #161616;
+  --cbot-bubble-user: #ededed;
+  --cbot-bubble-user-text: #0a0a0a;
+}
+
+/* =========================================
+   FAB
+   ========================================= */
+
+.cbot-fab {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.55rem;
+  background: var(--cbot-elev);
+  border: 1px solid var(--cbot-border);
+  border-radius: 999px;
+  color: var(--cbot-text);
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 180ms ease,
+    background 180ms ease,
+    opacity 200ms ease;
+}
+
+.cbot-fab:hover {
+  background: var(--cbot-hover);
+  border-color: var(--cbot-border-strong);
+  transform: translateY(-1px);
+}
+
+.cbot-fab--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+.cbot-fab-avatar {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.cbot-fab-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid var(--cbot-border-strong);
+}
+
+.cbot-fab-dot {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cbot-status);
+  border: 2px solid var(--cbot-elev);
+}
+
+.cbot-fab-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.cbot-fab-top { font-weight: 500; color: var(--cbot-text); }
+.cbot-fab-sub {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--cbot-dim);
+}
+
+/* =========================================
+   PANEL
+   ========================================= */
+
+.cbot-panel {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 101;
+  width: min(380px, calc(100vw - 2rem));
+  height: min(560px, calc(100vh - 2.5rem));
+  display: flex;
+  flex-direction: column;
+  background: var(--cbot-bg);
+  border: 1px solid var(--cbot-border);
+  border-radius: 14px;
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  color: var(--cbot-text);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    0 6px 18px rgba(0, 0, 0, 0.4);
+  transform-origin: bottom right;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  overflow: hidden;
+}
+
+.cbot-panel--open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Header */
+
+.cbot-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.85rem 0.75rem 0.75rem;
+  border-bottom: 1px solid var(--cbot-border);
+  background: var(--cbot-elev);
+}
+
+.cbot-who {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.cbot-who img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid var(--cbot-border-strong);
+  flex: 0 0 auto;
+}
+
+.cbot-name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.cbot-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 11px;
+  color: var(--cbot-dim);
+  line-height: 1.2;
+}
+
+.cbot-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cbot-status);
+}
+
+.cbot-close {
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--cbot-soft);
+  font-size: 18px;
+  line-height: 1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.cbot-close:hover {
+  background: var(--cbot-hover);
+  color: var(--cbot-text);
+  border-color: var(--cbot-border);
+}
+
+/* Body */
+
+.cbot-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0.85rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cbot-border-strong) transparent;
+}
+
+.cbot-body::-webkit-scrollbar { width: 8px; }
+.cbot-body::-webkit-scrollbar-thumb {
+  background: var(--cbot-border-strong);
+  border-radius: 4px;
+}
+
+.cbot-msg {
+  display: flex;
+  max-width: 100%;
+}
+
+.cbot-msg--bot { justify-content: flex-start; }
+.cbot-msg--user { justify-content: flex-end; }
+
+.cbot-bubble {
+  max-width: 85%;
+  padding: 0.55rem 0.8rem;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border: 1px solid var(--cbot-border);
+}
+
+.cbot-msg--bot .cbot-bubble {
+  background: var(--cbot-bubble-bot);
+  color: var(--cbot-text);
+  border-top-left-radius: 4px;
+}
+
+.cbot-msg--user .cbot-bubble {
+  background: var(--cbot-bubble-user);
+  color: var(--cbot-bubble-user-text);
+  border-color: transparent;
+  border-top-right-radius: 4px;
+}
+
+.cbot-bubble--error {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+}
+
+/* Typing */
+
+.cbot-bubble--typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.65rem 0.8rem;
+}
+
+.cbot-bubble--typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cbot-soft);
+  opacity: 0.4;
+  animation: cbot-bounce 1.2s infinite ease-in-out;
+}
+
+.cbot-bubble--typing span:nth-child(2) { animation-delay: 0.15s; }
+.cbot-bubble--typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes cbot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+
+/* Suggestions */
+
+.cbot-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.cbot-suggestion {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--cbot-border);
+  background: var(--cbot-elev);
+  color: var(--cbot-soft);
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+
+.cbot-suggestion:hover {
+  border-color: var(--cbot-border-strong);
+  color: var(--cbot-text);
+  background: var(--cbot-hover);
+}
+
+/* Footer */
+
+.cbot-foot {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  border-top: 1px solid var(--cbot-border);
+  background: var(--cbot-elev);
+}
+
+.cbot-input {
+  flex: 1;
+  resize: none;
+  max-height: 120px;
+  padding: 0.55rem 0.7rem;
+  background: var(--cbot-bg);
+  border: 1px solid var(--cbot-border);
+  border-radius: 9px;
+  color: var(--cbot-text);
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.45;
+  outline: none;
+  transition: border-color 140ms ease;
+}
+
+.cbot-input::placeholder { color: var(--cbot-dim); }
+.cbot-input:focus { border-color: var(--cbot-border-strong); }
+.cbot-input:disabled { opacity: 0.6; cursor: wait; }
+
+.cbot-send {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--cbot-border);
+  background: var(--cbot-text);
+  color: var(--cbot-bg);
+  font-size: 16px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.cbot-send:hover:not(:disabled) { transform: translateY(-1px); }
+.cbot-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Responsive */
+
+@media (max-width: 480px) {
+  .cbot-fab {
+    bottom: 0.85rem;
+    right: 0.85rem;
+    padding: 0.45rem 0.7rem 0.45rem 0.45rem;
+  }
+  .cbot-fab-label { display: none; }
+
+  .cbot-panel {
+    bottom: 0.85rem;
+    right: 0.85rem;
+    left: 0.85rem;
+    width: auto;
+    height: min(560px, calc(100vh - 1.7rem));
+  }
+}
