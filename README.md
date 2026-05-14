@@ -22,6 +22,51 @@ Bienvenido a mi proyecto web personal, una plataforma en constante evolución cr
 
 ---
 
+## 🤖 Chatbot embebido en la home
+
+La home incluye un chatbot flotante (FAB abajo a la derecha) que conversa como Henar en primera persona, basándose en su CV. Está pensado como **agente de portfolio**: cualquiera puede preguntar por experiencia, stack, formación o cómo contactar, y la respuesta se construye contra los datos del CV.
+
+### Arquitectura
+
+| Pieza                                          | Rol                                                                                                                |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `src/data/cv.json`                             | Fuente de la verdad. Perfil, stack, experiencia y formación. La home y el chatbot leen de aquí.                    |
+| `src/components/chatbot.js` + `chatbot.css`    | Componente React: FAB, panel deslizable, mensajes, sugerencias, typing dots, manejo de errores.                    |
+| `api/chat.js` (Vercel Function)                | Endpoint de producción. Usa el SDK de Anthropic (Claude Haiku 4.5) con **prompt caching** del CV (`ephemeral`).    |
+| `dev-server/chat-cli.js`                       | Servidor HTTP local opcional para desarrollo sin API key. Delega la inferencia en la **CLI `claude`** del entorno. |
+| `"proxy": "http://localhost:4981"` (package.json) | Permite que en `npm start` (CRA) las llamadas a `/api/chat` se redirijan al dev-server local.                      |
+
+### Flujo en producción
+
+1. El usuario escribe en el chat → `POST /api/chat` con el historial de mensajes.
+2. `api/chat.js` importa `cv.json` y lo inyecta en un `system` prompt con `cache_control: ephemeral` (los siguientes turnos reusan la caché de 5 min y bajan el coste).
+3. Claude Haiku 4.5 responde en castellano, catalán o inglés según el idioma del usuario, ciñéndose al CV y rechazando prompt injection.
+4. La respuesta vuelve al frontend y se renderiza en el panel del chat.
+
+Variables de entorno necesarias en Vercel:
+
+| Env var             | Para qué                            |
+| ------------------- | ----------------------------------- |
+| `ANTHROPIC_API_KEY` | Llamada al modelo Claude en `/api/chat` |
+| `MONGODB_URI`       | Endpoint `/api/db` del gestor de tareas |
+
+### Flujo en local (sin API key)
+
+Pensado para iterar el system prompt o la UI sin gastar tokens, usando tu sesión `claude` autenticada:
+
+```bash
+npm run dev:chat   # terminal 1 — server HTTP en :4981 que hace `spawn('claude', ['-p', ...])`
+npm start          # terminal 2 — CRA en :4980 con proxy a :4981
+```
+
+El backend local mantiene exactamente el mismo contrato HTTP que el endpoint Vercel, así que el componente React no necesita saber qué hay detrás.
+
+### Endpoints HTTP
+
+El inventario completo está en [`API.md`](./API.md): método, body, ejemplos `curl`, errores, idempotencia y efectos colaterales por endpoint.
+
+---
+
 ## 🎯 Objetivos del proyecto
 - Servir como **tarjeta de presentación técnica**: mostrar cómo organizo y resuelvo problemas reales con React.  
 - Tener un entorno donde probar nuevas ideas (UI, performance, integración con APIs).  
